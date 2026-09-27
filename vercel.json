@@ -12,13 +12,31 @@
       ]
     },
     {
-      "source": "/(songs|All videos and Pictures|new pictures)/(.*)",
+      "source": "/(.*)\\.(mp4|webm|mp3|ogg|wav|jpeg|jpg|png|webp|svg)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
+        }
+      ]
+    },
+    {
+      "source": "/(songs|All%20videos%20and%20Pictures|new%20pictures|family%20videos)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
         }
       ]
     }
   ]
 }
+

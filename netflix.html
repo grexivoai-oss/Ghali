@@ -148,7 +148,7 @@
           <button class="sidebar-item" title="Favorites"><svg><use href="#icon-list"/></svg></button>
         </nav>
         <div class="sidebar-bottom">
-          <a href="index.html" class="return-hub-btn" title="Back to Birthday Hub" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:#e50914; color:#fff; text-decoration:none; margin-bottom:8px; font-size:16px; box-shadow:0 4px 10px rgba(0,0,0,0.6);" aria-label="Return to Birthday Hub">🎁</a>
+          <a href="index.html" class="return-hub-btn" id="btn-sidebar-return-hub" title="Back to Birthday Hub" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:#e50914; color:#fff; text-decoration:none; margin-bottom:8px; font-size:16px; box-shadow:0 4px 10px rgba(0,0,0,0.6);" aria-label="Return to Birthday Hub">🎁</a>
           <img src="" id="sidebar-user-avatar" class="sidebar-avatar" alt="Current Profile" title="Switch Profile">
         </div>
       </aside>
@@ -241,7 +241,7 @@
     <section id="screen-player" class="screen">
       <!-- Media Viewport (Video or Ken-Burns Image) -->
       <div class="player-viewport" id="player-viewport">
-        <video id="player-video" playsinline preload="auto"></video>
+        <video id="player-video" playsinline webkit-playsinline preload="metadata"></video>
         <div id="player-image-wrapper">
           <img id="player-image-blur" class="player-image-backdrop" alt="">
           <img id="player-image" alt="Episode Still">
@@ -432,23 +432,50 @@
           </div>
         </div>
       </div>
+    </div>
+
     <!-- ====================================================================
-         CINEMATIC COMPLETION OVERLAY (TRANSITION TO FINALE)
+         MODAL: FINALE UNLOCKED POPUP (WHEN NETFLIX IS COMPLETED)
          ==================================================================== -->
-    <div class="netflix-completion-overlay" id="netflix-completion-overlay" style="display:none; position:fixed; inset:0; z-index:999999; background:#000; opacity:0; transition:opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px;">
-      <div style="font-size:3.2rem; margin-bottom:16px; filter:drop-shadow(0 0 24px rgba(225,29,72,0.7)); animation:pulse 1.8s infinite;">❤️</div>
-      <h2 style="font-family:'Bebas Neue', sans-serif; font-size:2.4rem; letter-spacing:3px; color:#fff; margin-bottom:10px;">
-        TO BE CONTINUED...
-      </h2>
-      <p style="color:#d1d5db; font-size:1.05rem; font-family:'Inter', sans-serif; max-width:440px; line-height:1.6;">
-        And now, for what I've been holding in my heart...
-      </p>
+    <div class="finale-popup-backdrop" id="modal-netflix-finale-popup" style="display:none;">
+      <div class="finale-popup-card">
+        <button class="finale-popup-close" id="btn-close-finale-popup" title="Close" aria-label="Close modal">&times;</button>
+        
+        <div class="finale-popup-glow"></div>
+        <div class="finale-popup-badge">THE STORY OF US • COMPLETED 🎬</div>
+        
+        <div class="finale-popup-icon">🌹✨</div>
+        
+        <h2 class="finale-popup-title">Ek Aakhri Cheez, Ghali...</h2>
+        
+        <p class="finale-popup-lead">
+          Tumne hamari saari memories dekh li hain, meri jaan... Lekin tumhe waqai laga hamari kahani yahan khatam hoti hai? 😌❤️
+        </p>
+
+        <div class="finale-popup-quote">
+          "Meri biwi abhi tou shuru huwa hai..." ❤️
+        </div>
+
+        <p class="finale-popup-desc">
+          Ek aakhri aur sab se khaas personal surprise tumhara birthday hub par intezar kar raha hai.
+        </p>
+
+        <div class="finale-popup-actions">
+          <button type="button" class="btn-goto-finale" id="btn-popup-goto-finale">
+            <span>Enter The Final Chapter 🌹</span>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/></svg>
+          </button>
+          <button type="button" class="btn-popup-stay" id="btn-popup-stay-netflix">
+            Keep Watching Netflix 🍿
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=6"></script>
-  <script src="js/app.js?v=6"></script>
+  <script src="js/config.js?v=7"></script>
+  <script src="js/app.js?v=7"></script>
 </body>
 </html>

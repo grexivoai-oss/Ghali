@@ -616,25 +616,41 @@
       const targetSrc = new URL(sourceUrl, window.location.href).href;
       if (el.playerVideo.src !== targetSrc) {
         el.playerVideo.src = sourceUrl;
-        el.playerVideo.preload = "auto";
-        el.playerVideo.load();
       }
       el.playerVideo.muted = state.isMuted;
       el.playerVideo.volume = state.volume;
 
-      const playPromise = el.playerVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
+      const attemptPlay = () => {
+        const playPromise = el.playerVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            if (spinner) spinner.style.display = 'none';
+            state.isPlaying = true;
+            updatePlayPauseIcons(true);
+            onVideoPlay(); // Slows down background song and ducks volume!
+          }).catch((e) => {
+            console.log('Play restriction or waiting user interaction:', e);
+            if (spinner) spinner.style.display = 'none';
+            state.isPlaying = false;
+            updatePlayPauseIcons(false);
+          });
+        }
+      };
+
+      if (el.playerVideo.readyState >= 2) {
+        attemptPlay();
+      } else {
+        el.playerVideo.addEventListener('loadeddata', () => {
           if (spinner) spinner.style.display = 'none';
-          state.isPlaying = true;
-          updatePlayPauseIcons(true);
-          onVideoPlay(); // Slows down background song and ducks volume!
-        }).catch((e) => {
-          console.log('Play restriction or error:', e);
+          attemptPlay();
+        }, { once: true });
+        el.playerVideo.addEventListener('canplay', () => {
           if (spinner) spinner.style.display = 'none';
-          state.isPlaying = false;
-          updatePlayPauseIcons(false);
-        });
+          if (el.playerVideo.paused) attemptPlay();
+        }, { once: true });
+        setTimeout(() => {
+          if (el.playerVideo.paused) attemptPlay();
+        }, 500);
       }
     } else {
       // Photo Normal Size Display Mode
@@ -707,31 +723,44 @@
     }, 400);
   }
 
-  // --- VIDEO LISTENERS & FINALE REDIRECT ON COMPLETION ---
+  // --- FINALE UNLOCKED POPUP (WHEN NETFLIX IS COMPLETED) ---
   function markNetflixWatched() {
     sessionStorage.setItem('ghali_netflix_watched', 'true');
   }
 
-  let isRedirecting = false;
-  function redirectToFinaleOnComplete() {
-    if (isRedirecting) return;
-    isRedirecting = true;
+  function showNetflixFinalePopup() {
     markNetflixWatched();
-
+    if (state.isPhotoTimer) clearInterval(state.isPhotoTimer);
     try { el.playerVideo.pause(); } catch(e) {}
+    onVideoPauseOrEnd();
 
-    const overlay = document.getElementById('netflix-completion-overlay');
-    if (overlay) {
-      overlay.style.display = 'flex';
+    const popup = document.getElementById('modal-netflix-finale-popup');
+    if (popup) {
+      popup.style.display = 'flex';
       requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
+        popup.classList.add('open');
       });
-      setTimeout(() => {
-        window.location.href = "index.html?stage=finale";
-      }, 1200);
-    } else {
-      window.location.href = "index.html?stage=finale";
     }
+  }
+
+  function closeNetflixFinalePopup() {
+    const popup = document.getElementById('modal-netflix-finale-popup');
+    if (popup) {
+      popup.classList.remove('open');
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 350);
+    }
+  }
+
+  function navigateToFinaleStage() {
+    markNetflixWatched();
+    // Handles relative navigation safely on localhost or Vercel (/netflix or /netflix.html)
+    let finaleUrl = "index.html?stage=finale";
+    if (window.location.pathname.endsWith('/netflix') || window.location.pathname.endsWith('/netflix.html')) {
+      finaleUrl = window.location.href.replace(/\/netflix(\.html)?.*$/, '/index.html?stage=finale');
+    }
+    window.location.href = finaleUrl;
   }
 
   el.playerVideo.addEventListener('play', () => {
@@ -772,10 +801,9 @@
       markNetflixWatched();
     }
 
-    // Auto-redirect to finale as soon as the video reaches completion (handles any browser ended timing)
-    if (duration > 2 && current >= duration - 0.45) {
-      onVideoPauseOrEnd();
-      redirectToFinaleOnComplete();
+    // Auto-prompt next episode countdown 4s before end (only if not on the very last episode)
+    if (state.currentEpisodeId !== CONFIG.allEpisodes.length && duration > 6 && current >= duration - 4 && !el.nextEpCard.classList.contains('show')) {
+      showNextEpisodeCard();
     }
   });
 
@@ -790,7 +818,12 @@
   el.playerVideo.addEventListener('ended', () => {
     onVideoPauseOrEnd();
     markNetflixWatched();
-    redirectToFinaleOnComplete();
+    // If it's the final episode (episode 23), show the finale popup!
+    if (state.currentEpisodeId === CONFIG.allEpisodes.length) {
+      showNetflixFinalePopup();
+    } else {
+      showNextEpisodeCard();
+    }
   });
 
   // --- SCRUBBER SEEKING ---
@@ -1007,16 +1040,18 @@
       if (nextId <= CONFIG.allEpisodes.length) {
         playVideoEpisode(nextId);
       } else {
-        alert("You've watched all 23 episodes of our story! Here are some polaroids from our camera roll. ❤️");
-        playPhotoMemory(CONFIG.photoMemories[0].id);
+        // Watched through all video episodes! Show the luxury finale popup!
+        markNetflixWatched();
+        showNetflixFinalePopup();
       }
     } else {
       const currIdx = CONFIG.photoMemories.findIndex((p) => p.id === state.currentEpisodeId);
       if (currIdx !== -1 && currIdx + 1 < CONFIG.photoMemories.length) {
         playPhotoMemory(CONFIG.photoMemories[currIdx + 1].id);
       } else {
-        alert("You've watched all memories! Our love story has no ending, my Ghali. ❤️");
-        showScreen('screen-browse');
+        // Watched through all polaroid memories! Show the luxury finale popup!
+        markNetflixWatched();
+        showNetflixFinalePopup();
       }
     }
   }
@@ -1076,6 +1111,40 @@
     initBrowse();
     initBackgroundMusic();
     showScreen('screen-profiles');
+
+    // Finale Popup Event Listeners
+    const btnClosePopup = document.getElementById('btn-close-finale-popup');
+    if (btnClosePopup) btnClosePopup.addEventListener('click', closeNetflixFinalePopup);
+
+    const btnPopupStay = document.getElementById('btn-popup-stay-netflix');
+    if (btnPopupStay) btnPopupStay.addEventListener('click', closeNetflixFinalePopup);
+
+    const btnPopupGoto = document.getElementById('btn-popup-goto-finale');
+    if (btnPopupGoto) btnPopupGoto.addEventListener('click', navigateToFinaleStage);
+
+    const modalBackdrop = document.getElementById('modal-netflix-finale-popup');
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) closeNetflixFinalePopup();
+      });
+    }
+
+    // Return to Hub button in sidebar
+    const returnHubBtn = document.getElementById('btn-sidebar-return-hub');
+    if (returnHubBtn) {
+      returnHubBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (sessionStorage.getItem('ghali_netflix_watched') === 'true') {
+          showNetflixFinalePopup();
+        } else {
+          let giftsUrl = "index.html?stage=gifts";
+          if (window.location.pathname.endsWith('/netflix') || window.location.pathname.endsWith('/netflix.html')) {
+            giftsUrl = window.location.href.replace(/\/netflix(\.html)?.*$/, '/index.html?stage=gifts');
+          }
+          window.location.href = giftsUrl;
+        }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

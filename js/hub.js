@@ -62,6 +62,8 @@
     hasWatchedNetflix: sessionStorage.getItem('ghali_netflix_watched') === 'true',
   };
 
+  let goToFinaleSlide = null;
+
   // --- DOM ELEMENTS ---
   const el = {
     // Audio
@@ -184,6 +186,14 @@
     if (stageId === 'stage-gifts') {
       updateGift2LockUI();
       updateFinaleLockUI();
+    }
+
+    if (stageId === 'stage-finale') {
+      state.hasWatchedNetflix = true;
+      sessionStorage.setItem('ghali_netflix_watched', 'true');
+      if (typeof goToFinaleSlide === 'function') {
+        goToFinaleSlide(1);
+      }
     }
 
     // Performance optimization: Don't spawn/display bubbles on the entrance gate!
@@ -682,7 +692,7 @@
             </button>
           </div>
           <div class="fam-video-wrapper" id="fam-vid-${idx}" style="display:none;">
-            <video controls playsinline preload="metadata">
+            <video controls playsinline preload="none">
               <source src="${v.src}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -700,6 +710,7 @@
           burstConfetti(0.5, 0.4);
           cover.style.display = 'none';
           vidWrap.style.display = 'block';
+          videoElem.load();
           videoElem.play().catch(() => {});
         });
 
@@ -752,6 +763,8 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    goToFinaleSlide = goToSlide;
 
     // Step dots clickable
     const dots = document.querySelectorAll('.finale-steps-indicator .step-dot');
@@ -939,10 +952,17 @@
       state.hasWatchedNetflix = true;
       sessionStorage.setItem('ghali_netflix_watched', 'true');
       showStage('stage-finale');
+      if (typeof goToFinaleSlide === 'function') {
+        goToFinaleSlide(1);
+      }
     } else if (targetStage === 'gifts') {
       showStage('stage-gifts');
     } else {
-      showStage('stage-gate');
+      if (sessionStorage.getItem('ghali_netflix_watched') === 'true') {
+        showStage('stage-gifts');
+      } else {
+        showStage('stage-gate');
+      }
     }
   }
 
