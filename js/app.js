@@ -300,6 +300,7 @@
           el.sidebarUserAvatar.src = profile.avatar;
           el.mobileUserAvatar.src = profile.avatar;
           showScreen('screen-browse');
+          prebufferFirstEpisode();
 
           // Reset profile screen classes for clean future returns
           card.classList.remove('selected');
@@ -587,30 +588,54 @@
     populateEpisodesDrawer();
   }
 
+  function prebufferFirstEpisode() {
+    if (CONFIG.allEpisodes && CONFIG.allEpisodes[0]) {
+      const ep1 = CONFIG.allEpisodes[0];
+      const targetSrc = new URL(ep1.mediaSource, window.location.href).href;
+      if (el.playerVideo.src !== targetSrc) {
+        el.playerVideo.src = ep1.mediaSource;
+        el.playerVideo.preload = "auto";
+      }
+    }
+  }
+
   function loadMedia(sourceUrl, type, fallbackImg) {
     if (state.isPhotoTimer) {
       clearInterval(state.isPhotoTimer);
       state.isPhotoTimer = null;
     }
 
+    const spinner = document.getElementById('player-loading-spinner');
+
     if (type === 'video') {
       el.playerImageWrapper.style.display = 'none';
       el.playerVideo.style.display = 'block';
 
-      el.playerVideo.src = sourceUrl;
-      el.playerVideo.load();
+      if (spinner) spinner.style.display = 'block';
+
+      const targetSrc = new URL(sourceUrl, window.location.href).href;
+      if (el.playerVideo.src !== targetSrc) {
+        el.playerVideo.src = sourceUrl;
+        el.playerVideo.preload = "auto";
+        el.playerVideo.load();
+      }
       el.playerVideo.muted = state.isMuted;
       el.playerVideo.volume = state.volume;
 
-      el.playerVideo.play().then(() => {
-        state.isPlaying = true;
-        updatePlayPauseIcons(true);
-        onVideoPlay(); // Slows down background song and ducks volume!
-      }).catch((e) => {
-        console.log('Autoplay restriction or error:', e);
-        state.isPlaying = false;
-        updatePlayPauseIcons(false);
-      });
+      const playPromise = el.playerVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          if (spinner) spinner.style.display = 'none';
+          state.isPlaying = true;
+          updatePlayPauseIcons(true);
+          onVideoPlay(); // Slows down background song and ducks volume!
+        }).catch((e) => {
+          console.log('Play restriction or error:', e);
+          if (spinner) spinner.style.display = 'none';
+          state.isPlaying = false;
+          updatePlayPauseIcons(false);
+        });
+      }
     } else {
       // Photo Normal Size Display Mode
       el.playerVideo.style.display = 'none';
@@ -693,6 +718,8 @@
     isRedirecting = true;
     markNetflixWatched();
 
+    try { el.playerVideo.pause(); } catch(e) {}
+
     const overlay = document.getElementById('netflix-completion-overlay');
     if (overlay) {
       overlay.style.display = 'flex';
@@ -701,7 +728,7 @@
       });
       setTimeout(() => {
         window.location.href = "index.html?stage=finale";
-      }, 1400);
+      }, 1200);
     } else {
       window.location.href = "index.html?stage=finale";
     }
@@ -716,6 +743,21 @@
     onVideoPauseOrEnd();
   });
 
+  el.playerVideo.addEventListener('waiting', () => {
+    const spinner = document.getElementById('player-loading-spinner');
+    if (spinner) spinner.style.display = 'block';
+  });
+
+  el.playerVideo.addEventListener('canplay', () => {
+    const spinner = document.getElementById('player-loading-spinner');
+    if (spinner) spinner.style.display = 'none';
+  });
+
+  el.playerVideo.addEventListener('playing', () => {
+    const spinner = document.getElementById('player-loading-spinner');
+    if (spinner) spinner.style.display = 'none';
+  });
+
   el.playerVideo.addEventListener('timeupdate', () => {
     if (state.isScrubbing) return;
     const current = el.playerVideo.currentTime;
@@ -725,13 +767,15 @@
     el.scrubProgress.style.width = `${pct}%`;
     el.timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
 
-    // Mark as watched once she has played 10 seconds or 30% of the video
-    if (current > 10 || pct > 30) {
+    // Mark as watched once she has played 4 seconds or 15% of the video
+    if (current > 4 || pct > 15) {
       markNetflixWatched();
     }
 
-    if (duration - current <= 5 && !el.nextEpCard.classList.contains('show')) {
-      showNextEpisodeCard();
+    // Auto-redirect to finale as soon as the video reaches completion (handles any browser ended timing)
+    if (duration > 2 && current >= duration - 0.45) {
+      onVideoPauseOrEnd();
+      redirectToFinaleOnComplete();
     }
   });
 

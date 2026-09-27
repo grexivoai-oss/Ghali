@@ -22,8 +22,13 @@
     // Video surprise
     surpriseVideo: "new pictures/kitni ghali hai tu.mp4",
 
-    // Family Wishes Videos
-    familyVideos: [],
+    // Family Wishes Videos (4 special videos)
+    familyVideos: [
+      { id: "fv1", title: "Special Family Message 1 💝", src: "family videos/164637.mp4" },
+      { id: "fv2", title: "Special Family Message 2 💖", src: "family videos/164638.mp4" },
+      { id: "fv3", title: "Special Family Message 3 🌸", src: "family videos/164639.mp4" },
+      { id: "fv4", title: "Special Family Message 4 ✨", src: "family videos/164640.mp4" },
+    ],
 
     // Background soundtrack
     songs: [
@@ -667,13 +672,37 @@
       HUB_CONFIG.familyVideos.forEach((v, idx) => {
         const card = document.createElement('div');
         card.className = 'family-video-card';
+        card.id = `fam-card-${idx}`;
         card.innerHTML = `
-          <video controls playsinline preload="metadata">
-            <source src="${v.src}" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <div class="family-video-name">${v.title || `Family Message ${idx + 1}`}</div>
+          <div class="fam-gift-cover" id="fam-cover-${idx}">
+            <div class="fam-gift-icon">🎁</div>
+            <div class="fam-gift-title">${v.title || `Special Wish ${idx + 1}`}</div>
+            <button type="button" class="fam-gift-btn" id="fam-btn-${idx}">
+              <span>Open Gift 🎁</span>
+            </button>
+          </div>
+          <div class="fam-video-wrapper" id="fam-vid-${idx}" style="display:none;">
+            <video controls playsinline preload="metadata">
+              <source src="${v.src}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="family-video-name">${v.title || `Family Wish ${idx + 1}`} ❤️</div>
+          </div>
         `;
+
+        const openBtn = card.querySelector(`#fam-btn-${idx}`);
+        const cover = card.querySelector(`#fam-cover-${idx}`);
+        const vidWrap = card.querySelector(`#fam-vid-${idx}`);
+        const videoElem = vidWrap.querySelector('video');
+
+        openBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          burstConfetti(0.5, 0.4);
+          cover.style.display = 'none';
+          vidWrap.style.display = 'block';
+          videoElem.play().catch(() => {});
+        });
+
         el.familyVideosGrid.appendChild(card);
       });
     } else {

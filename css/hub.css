@@ -1989,3 +1989,129 @@ html, body {
     font-size: 1.7rem;
   }
 }
+
+/* Family Videos Interactive Gift Cards */
+.letter-family-box {
+  background: linear-gradient(135deg, rgba(255, 241, 242, 0.85), rgba(255, 228, 230, 0.7));
+  border: 1.5px solid rgba(225, 29, 72, 0.25);
+  border-radius: 24px;
+  padding: 32px 24px;
+  margin: 36px 0;
+  text-align: center;
+}
+
+.family-box-badge {
+  display: inline-block;
+  background: var(--primary-rose);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 6px 18px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+}
+
+.family-box-title {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  color: #1F2937;
+  margin-bottom: 8px;
+}
+
+.family-box-note {
+  font-size: 0.95rem;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+.family-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.family-video-card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid rgba(225, 29, 72, 0.18);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  padding: 20px 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.family-video-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(225, 29, 72, 0.15);
+}
+
+.fam-gift-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 10px;
+}
+
+.fam-gift-icon {
+  font-size: 3.2rem;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.fam-gift-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #1F2937;
+}
+
+.fam-gift-btn {
+  background: linear-gradient(135deg, var(--primary-rose), var(--rose-deep));
+  color: #ffffff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.3);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fam-gift-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 22px rgba(225, 29, 72, 0.45);
+}
+
+.fam-video-wrapper {
+  width: 100%;
+  animation: modalPopIn 0.4s ease;
+}
+
+.fam-video-wrapper video {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 300px;
+  background: #000;
+  outline: none;
+}
+
+.family-video-name {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-rose);
+  text-align: center;
+}
+
