@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday To My Perfect Khurat Biwi ❤️</title>
+  <meta name="description" content="A special birthday surprise for My Ghali, My Biwi, Khurat Biwi, Meri Gundi, Mera Bacho Ki Maa, and Meri Sabkuch.">
+  <meta name="theme-color" content="#FAFAF8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/hub.css?v=8">
+</head>
+<body>
+
+  <!-- Floating Photo Bubbles Background (21 pictures from "new pictures") -->
+  <div class="photo-bubbles-container" id="photo-bubbles-container"></div>
+
+  <!-- Background Audio Element (Continuous Love Songs) -->
+  <audio id="hub-bg-music" preload="auto"></audio>
+
+  <!-- Floating Music Pill Widget -->
+  <div class="hub-music-widget" id="hub-music-widget" title="Birthday Soundtrack">
+    <div class="hub-music-disc">🎵</div>
+    <div class="hub-music-info">
+      <span class="hub-music-title" id="hub-music-title">Can't Help Falling in Love</span>
+      <span class="hub-music-artist" id="hub-music-artist">Elvis Presley</span>
+    </div>
+    <button class="hub-music-btn" id="hub-music-playpause" title="Play / Pause">
+      <svg id="hub-music-play-icon" viewBox="0 0 24 24" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="hub-music-pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <button class="hub-music-btn" id="hub-music-next" title="Next Song">
+      <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+    </button>
+  </div>
+
+
+  <!-- ====================================================================
+       STAGE 1: ENTRANCE PASSWORD GATE
+       ==================================================================== -->
+  <section id="stage-gate" class="hub-stage active">
+    <div class="gate-card-wrapper" id="gate-card-wrapper">
+      <div class="gate-left-content">
+        <h1 class="gate-title">For My Ghali ❤️</h1>
+        <p class="gate-subtitle">
+          Enter the secret date that belongs only to us to unlock your birthday world.
+        </p>
+
+        <div class="gate-hint-box">
+          <div class="gate-hint-label">💡 Secret Memory Hint</div>
+          <div class="gate-hint-text">
+            Vo din jis din tu mera se 3 din tak sharmayi thi or ap ap kar ka baat ki thi 😂
+          </div>
+        </div>
+
+        <form class="gate-form" id="gate-form">
+          <div class="gate-input-wrap">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <input type="text" id="gate-password-input" class="gate-input" placeholder="Enter date..." autocomplete="off" required>
+          </div>
+          <p id="gate-error-msg" style="color:#E11D48; font-size:0.86rem; font-weight:600; display:none;"></p>
+          <button type="submit" class="gate-btn-submit">
+            <span>Unlock Your Surprise</span>
+            <span>🔓</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="gate-right-photo">
+        <div class="gate-photo-frame">
+          <img src="All videos and Pictures/11.jpeg" class="gate-photo-img" alt="My Ghali &amp; Me">
+          <div class="gate-photo-caption">My Ghali, Meri Jaan ❤️</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       STAGE 2: BIRTHDAY WELCOME SCREEN
+       ==================================================================== -->
+  <section id="stage-welcome" class="hub-stage">
+    <div class="welcome-inner">
+      <div class="bday-crown-icon">👑</div>
+      <h1 class="welcome-title">Happy Birthday to My<br><span>Perfect Khurat Biwi</span> ❤️</h1>
+      <p class="welcome-sub">
+        To the most beautiful girl in the universe who stole my heart, brings light to my darkest days, and makes me the happiest man alive. I made something special just for you...
+      </p>
+      <button class="btn-something-for-you" id="btn-something-for-you">
+        <span>Something for you</span>
+        <span>🎁</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       STAGE 3: PLAYFUL CONFIRMATION MODAL ("Are you sure?")
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-confirm">
+    <div class="hub-dialog-card">
+      <div class="hub-dialog-emoji" id="confirm-dialog-emoji">🥺</div>
+      <h2 class="hub-dialog-title" id="confirm-dialog-title">Are you sure?</h2>
+      <p class="hub-dialog-msg" id="confirm-dialog-msg">
+        You are about to open something made with infinite love for my Ghali... Are you completely ready?
+      </p>
+      <div class="hub-dialog-actions">
+        <button class="hub-btn-yes" id="btn-confirm-yes">Yes Meri Jaan ❤️</button>
+        <button class="hub-btn-no" id="btn-confirm-no">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CELEBRATION POP-UP ("ALLAHH JAAANNNNN MUAAHHHHHH") -->
+  <div class="hub-modal-backdrop" id="modal-celebrate">
+    <div class="hub-dialog-card">
+      <div class="hub-dialog-emoji">❤️🎉✨</div>
+      <h2 class="hub-dialog-title" style="color:#E11D48; font-size:2.1rem; line-height:1.2;">ALLAHH JAAANNNNN MUAAHHHHHH ❤️✨</h2>
+      <p class="hub-dialog-msg" style="font-size:1.1rem; margin:16px 0 28px; font-weight:600; color:#333;">
+        Wait before showing you your gifts, check this video...<br>
+        <span style="color:#E11D48; font-style:italic;">kitni ghali hai yr tu i LOVE YOUU 😂❤️</span>
+      </p>
+      <button class="hub-btn-yes" id="btn-celebrate-proceed" style="padding:16px 36px; font-size:1.1rem;">
+        Watch Video Now 🎬
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       STAGE 3: SURPRISE VIDEO SCREEN ("kitni ghali hai tu")
+       ==================================================================== -->
+  <section id="stage-video" class="hub-stage">
+    <div class="video-player-card">
+      <div class="video-header-banner">
+        <span class="video-banner-tag">SPECIAL SURPRISE CLIP 🎬</span>
+        <h2 class="video-banner-title">Kitni Ghali Hai Tu Yr 😂❤️</h2>
+      </div>
+
+      <div class="video-viewport-wrap">
+        <video id="surprise-video-elem" controls playsinline></video>
+      </div>
+
+      <div class="video-footer-actions">
+        <span class="video-footer-note">I love every single silly, cute, and crazy moment with you...</span>
+        <button class="btn-proceed-gifts" id="btn-proceed-gifts">
+          <span>Proceed to Your Gifts</span>
+          <span>💝</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       STAGE 4: THE 2 GIFTS PORTAL
+       ==================================================================== -->
+  <section id="stage-gifts" class="hub-stage">
+    <div class="gifts-portal-heading">
+      <span class="gifts-portal-tag">YOUR BIRTHDAY PRESENTS 💝</span>
+      <h1 class="gifts-portal-title">Two Special Gifts For My Ghali</h1>
+      <p class="gifts-portal-sub">
+        Locked with our sweetest memories. Enter the secret code to open each treasure.
+      </p>
+    </div>
+
+    <div class="gifts-cards-grid">
+      <!-- Gift 1: Mystery Gift Card -->
+      <div class="gift-box-card" id="gift-card-1">
+        <span class="gift-ribbon-tag">GIFT 1 🎁</span>
+        <div class="gift-icon-wrap">🎁</div>
+        <h2 class="gift-card-title">Gift 1 🎁</h2>
+        <p class="gift-card-desc">
+          A special surprise made just for you with all my heart...
+        </p>
+        <button class="btn-open-gift" id="btn-open-gift-1">Open Gift 🎁</button>
+      </div>
+
+      <!-- Gift 2: Mystery Gift Card (Initially Locked until Gift 1 is viewed) -->
+      <div class="gift-box-card" id="gift-card-2">
+        <span class="gift-ribbon-tag" id="gift2-ribbon-tag">LOCKED 🔒</span>
+        <div class="gift-icon-wrap" id="gift2-icon-wrap">🔒</div>
+        <h2 class="gift-card-title">Gift 2 🎁</h2>
+        <p class="gift-card-desc">
+          Another magical surprise waiting to be unlocked...
+        </p>
+        <button class="btn-open-gift" id="btn-open-gift-2">Open Gift 🎁</button>
+      </div>
+    </div>
+
+    <!-- TEASER FOR THE FINAL CHAPTER (Appears after exploring) -->
+    <div class="finale-teaser-wrap" id="finale-teaser-wrap">
+      <div class="finale-teaser-card" id="btn-open-finale">
+        <div class="teaser-sparkle">🌹</div>
+        <div class="teaser-info">
+          <span class="teaser-badge">THE FINALE ✨</span>
+          <h3 class="teaser-title">Ek Aakhri Cheez, Ghali... 🌹</h3>
+          <p class="teaser-text">Tujhe kya laga bas do gifts aur khatam? Abhi to sab se khaas chapter baki hai...</p>
+        </div>
+        <button class="btn-enter-finale-badge">Open Finale 🌹</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       STAGE 5: FINAL CHAPTER — "ONE LAST THING, GHALI..."
+       ==================================================================== -->
+    <section id="stage-finale" class="hub-stage">
+    <div class="finale-booklet-container">
+      
+      <!-- Top Navigation & Progress Bar -->
+      <div class="finale-top-nav">
+        <button class="btn-finale-nav-back" id="btn-finale-exit" title="Back to Gifts Hub">
+          <span>⬅ Wapas Hub</span>
+        </button>
+        
+        <div class="finale-progress-wrap">
+          <div class="finale-steps-indicator" id="finale-steps-indicator">
+            <span class="step-dot active" data-step="1"></span>
+            <span class="step-dot" data-step="2"></span>
+            <span class="step-dot" data-step="3"></span>
+            <span class="step-dot" data-step="4"></span>
+            <span class="step-dot" data-step="5"></span>
+          </div>
+          <span class="finale-step-text" id="finale-step-counter">Page 1 of 5</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 1: TO MY 22-YEAR-OLD GHALI... -->
+      <div class="finale-slide active" id="finale-slide-1">
+        <div class="finale-card">
+          <span class="finale-gold-tag">AN ODE TO YOUR 22ND YEAR 🎂❤️</span>
+          <h2 class="finale-slide-title">To My 22-Year-Old Ghali...</h2>
+          
+          <div class="finale-letter-body">
+            <p>
+              Happy 22nd Birthday, meri jaan. ❤️ 22 saal ki ho gayi ho tum, aur mujhe tum par hadd se zyada fakhar hai.
+            </p>
+            <p>
+              Tum jis tarah apni zindagi ko sambhalti ho, jitni khamoshi se har mushkil ka samna karti ho, aur phir bhi tumhara dil itna naram, saaf aur pyara hai... I am so endlessly proud of the woman you are becoming.
+            </p>
+            <p>
+              Main dua karta hoon ke yeh 22nd saal tumhari zindagi ka sab se khoobsurat, kamyab aur sukoon bhara saal banay. Tumhari hansi kabhi kam na ho, kyunke jab tum khilkhilati ho na, to sach mein dunya ki har fikar aik taraf ho jati hai.
+            </p>
+            
+            <div class="letter-quote-box">
+              <div class="quote-salute">Happy Birthday, my Ghali. ❤️</div>
+              <p class="quote-subtext">
+                "I hope jab tum saalon baad is birthday ko yaad karo, to yeh website ya gifts nahi...<br>
+                <strong>bas yeh yaad rahe ke tum se kitni be-panah mohabbat ki gayi thi.</strong>"
+              </p>
+            </div>
+          </div>
+
+          <div class="slide-footer-nav">
+            <button class="btn-slide-nav btn-slide-prev" id="btn-slide-1-back" style="visibility:hidden;">
+              <span>⬅ Peechay</span>
+            </button>
+            <button class="btn-slide-nav btn-slide-next hub-btn-primary" id="btn-slide-1-next">
+              <span>Agay Chalo Meri Jaan ❤️ ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: WILL YOU GO ON A BIRTHDAY DATE WITH ME? -->
+      <div class="finale-slide" id="finale-slide-2">
+        <div class="finale-card date-card-box">
+          <div class="invite-icon-heart">💌</div>
+          <span class="finale-gold-tag">A SPECIAL INVITATION 🌹</span>
+          <h2 class="finale-slide-title">Will you go on a birthday date with me?</h2>
+          <p class="finale-slide-sub">
+            Pooch is liye raha hoon taake tameez se dawat doon, warna haq to poora hai mera 😌❤️
+          </p>
+
+          <div class="date-choice-actions" id="date-choice-actions">
+            <button class="btn-date-action-yes" id="btn-date-yes">
+              YES, OBVIOUSLY ❤️
+            </button>
+            <button class="btn-date-action-no" id="btn-date-no">
+              NO 🙄
+            </button>
+          </div>
+
+          <!-- REVEALED ON YES: 28 SEPTEMBER TICKET -->
+          <div class="date-confirmed-wrap" id="date-confirmed-wrap" style="display:none;">
+            <div class="booked-header">
+              <span class="booked-sparkle">✓</span>
+              <h3 class="booked-lead">I KNEW IT. 😌❤️</h3>
+              <p class="booked-info">Your birthday date is officially booked.</p>
+            </div>
+
+            <div class="calendar-ticket-card">
+              <div class="ticket-date-square">
+                <span class="ticket-month">SEPTEMBER</span>
+                <span class="ticket-day">28</span>
+              </div>
+              <div class="ticket-info">
+                <div class="ticket-chip">OFFICIAL BIRTHDAY DATE 🌹</div>
+                <h4 class="ticket-title">Your Special Day With Me</h4>
+                <p class="ticket-promise">"Tumhara sirf aik hi kaam hai: tayyar rehna. Baqi sab kuch main dekh loonga. ❤️"</p>
+              </div>
+            </div>
+
+            <div class="slide-footer-nav" style="margin-top:24px;">
+              <button class="btn-slide-nav btn-slide-prev" id="btn-slide-2-back">
+                <span>⬅ Peechay</span>
+              </button>
+              <button class="btn-slide-nav btn-slide-next hub-btn-primary" id="btn-slide-2-next">
+                <span>I'M READY ❤️ ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="slide-footer-nav-simple" id="date-nav-default">
+            <button class="btn-slide-nav btn-slide-prev" id="btn-slide-2-back-init">
+              <span>⬅ Peechay</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: SURPRISE REVEAL #1 — UNIVERSITY PICKUP -->
+      <div class="finale-slide" id="finale-slide-3">
+        <div class="finale-card reveal-card-box">
+          <span class="reveal-badge-pill">SURPRISE REVEAL #1 🚗💨</span>
+          <h3 class="reveal-teaser-lead">"I KNEW IT. 😌❤️"</h3>
+          <p class="reveal-teaser-p">"Lekin ruko... Tumhe laga bas itna hi surprise tha?"</p>
+          <div class="reveal-pause-dots">. . .</div>
+          <h4 class="reveal-hook-title">"Ghali... abhi to asli kahani shuru hui hai." 😂❤️</h4>
+
+          <div class="pickup-highlight-card">
+            <h2 class="pickup-big-text">"I'll come pick you up from university on your birthday." ❤️</h2>
+            <div class="pickup-bullet-points">
+              <p>• "Tumhe koi planning karne ki zaroorat nahi hai."</p>
+              <p>• "Bas jab main kahoon, chup chap tayyar ho jana."</p>
+              <p class="pickup-golden-line">
+                "Kyunke main nahi chahta ke tum apni birthday par ghar baith kar gifts kholo...<br>
+                <strong>Mujhe tumhein dekhna hai. ❤️</strong>"
+              </p>
+            </div>
+          </div>
+
+          <div class="slide-footer-nav">
+            <button class="btn-slide-nav btn-slide-prev" id="btn-slide-3-back">
+              <span>⬅ Peechay</span>
+            </button>
+            <button class="btn-slide-nav btn-slide-next hub-btn-primary" id="btn-slide-3-next">
+              <span>Abhi Ek Aur Baki Hai... ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: SURPRISE REVEAL #2 — WE'RE MEETING TWICE THIS WEEK! -->
+      <div class="finale-slide" id="finale-slide-4">
+        <div class="finale-card reveal-card-box">
+          <span class="reveal-badge-pill">SURPRISE REVEAL #2 🤯❤️</span>
+          <h3 class="reveal-teaser-lead">"Aur aik aur sab se barri cheez..."</h3>
+          <h2 class="double-meet-title">"We're meeting TWICE this week." 😭❤️</h2>
+          <p class="double-meet-sub">
+            "Haan, sahi parha tumne!<br>
+            Aik dafa tumhari birthday ke liye... aur aik dafa kyunke mera tumhare baghair guzara hi nahi hota!" 😂❤️
+          </p>
+
+          <div class="two-dates-grid">
+            <div class="date-mini-card">
+              <div class="date-mini-icon">🎂</div>
+              <span class="date-mini-tag">FIRST DATE</span>
+              <h4 class="date-mini-name">BIRTHDAY</h4>
+              <p class="date-mini-desc">Hamara pehla din sath.</p>
+            </div>
+
+            <div class="date-mini-card mystery-card">
+              <div class="date-mini-icon">❤️</div>
+              <span class="date-mini-tag">SECOND DATE</span>
+              <h4 class="date-mini-name">ROUND TWO</h4>
+              <p class="date-mini-desc">Doosra din. Doosra surprise.</p>
+            </div>
+          </div>
+
+          <div class="mystery-scold-note">
+            <p>"Aur khabardaar agar poochne ki koshish ki ke doosra surprise kya hai."</p>
+            <p>"You've already unlocked enough spoilers for one night, khurat." 😂❤️</p>
+          </div>
+
+          <div class="slide-footer-nav">
+            <button class="btn-slide-nav btn-slide-prev" id="btn-slide-4-back">
+              <span>⬅ Peechay</span>
+            </button>
+            <button class="btn-slide-nav btn-slide-next btn-final-curtain-trigger" id="btn-slide-4-next">
+              <span>The Final Screen 🌹 ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: THE FINAL SCREEN (CINEMATIC STARLIT VELVET GLOW) -->
+      <div class="finale-slide final-screen-curtain" id="finale-slide-5">
+        <button class="btn-curtain-top-back" id="btn-slide-5-back" title="Go back to Slide 4">
+          <span>⬅ Peechay</span>
+        </button>
+        <div class="curtain-starlight-glow"></div>
+        <div class="curtain-stars-bg"></div>
+        
+        <div class="curtain-inner-content">
+          <p class="curtain-line line-1">"The website ends here..."</p>
+          <p class="curtain-line line-2">"...lekin tumhari birthday nahi."</p>
+          <div class="curtain-divider">✦ ✦ ✦</div>
+          <p class="curtain-line line-3">"The surprises haven't stopped yet."</p>
+          <p class="curtain-line line-4">"Yeh poora hafta hamara hai." ❤️</p>
+          
+          <h2 class="curtain-grand-salute">"See you soon, meri jaan."</h2>
+          <p class="curtain-ps-text">P.S. — Be ready when I tell you. 😌❤️</p>
+
+          <div class="curtain-action-buttons">
+            <button class="btn-curtain-action btn-curtain-back-btn" id="btn-slide-5-back-bottom">
+              ⬅ Peechay
+            </button>
+            <button class="btn-curtain-action" id="btn-curtain-hub">
+              ↺ Wapas Birthday Hub
+            </button>
+            <a href="netflix.html" class="btn-curtain-action btn-curtain-netflix">
+              🍿 Stream The Story of Us
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       MODAL: DATE TEASING "NO" MODAL
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-date-no">
+    <div class="hub-dialog-card" style="max-width:480px;">
+      <div class="hub-dialog-emoji">😂❤️</div>
+      <h2 class="hub-dialog-title" style="color:#E11D48; font-size:1.85rem;">HAHAHAHAHAHAHA</h2>
+      <p class="hub-dialog-msg" style="font-size:1.15rem; color:#1F2937; line-height:1.6; margin:16px 0 28px;">
+        Nice try, khurat! 😂<br><br>
+        Tujhe waqai laga maine poori birthday website banayi hai taake tu 'NO' dabaye?<br><br>
+        <strong style="color:#E11D48; font-size:1.25rem;">NO OPTION AVAILABLE 😭❤️</strong><br><br>
+        Ab chup chap YES kar, batameez biwi! 😤❤️
+      </p>
+      <button class="hub-btn-yes" id="btn-date-modal-yes" style="padding:14px 36px; font-size:1.1rem;">
+        YES MERI JAAN ❤️
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       MODAL: GIFT 2 LOCKED WARNING
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-gift2-locked">
+    <div class="hub-dialog-card" style="max-width:480px;">
+      <div class="hub-dialog-emoji">😤❤️</div>
+      <h2 class="hub-dialog-title">Bohot Uchalti Hai Tu!</h2>
+      <p class="hub-dialog-msg" style="font-size:1.15rem; color:#BE123C; font-weight:700; line-height:1.55; margin:16px 0 28px;">
+        bohot uchalti hai tu meri choti gundi gift 1 dekh phela phir aa 2 per 😂
+      </p>
+      <button class="hub-btn-yes" id="btn-gift2-locked-ok" style="padding:14px 34px; font-size:1.05rem;">
+        Pehle Gift 1 Dekhti Hoon 🎁
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       MODAL: GIFT PASSWORD PROMPT
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-gift-password">
+    <div class="hub-dialog-card" style="max-width:460px;">
+      <div class="hub-dialog-emoji">🔐</div>
+      <h2 class="hub-dialog-title" id="gift-pwd-title">Unlock Gift</h2>
+      
+      <div class="gate-hint-box" style="margin: 16px 0 20px; text-align:left;">
+        <div class="gate-hint-label">💡 Hint</div>
+        <div class="gate-hint-text" id="gift-pwd-hint">Hint goes here</div>
+      </div>
+
+      <form id="gift-pwd-form" style="display:flex; flex-direction:column; gap:14px;">
+        <input type="text" id="gift-pwd-input" class="gate-input" placeholder="Enter password..." autocomplete="off" required style="padding-left:20px; text-align:center; font-size:1.1rem; letter-spacing:1px;">
+        <p id="gift-pwd-error" style="color:#E11D48; font-size:0.86rem; font-weight:600; display:none;"></p>
+        <div style="display:flex; gap:12px; margin-top:8px;">
+          <button type="button" class="hub-btn-no" id="btn-close-gift-modal" style="flex:1;">Cancel</button>
+          <button type="submit" class="hub-btn-yes" style="flex:1;">Unlock Gift 🔓</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       MODAL: THE GRAND LOVE LETTER (GIFT 1)
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-love-letter">
+    <div class="letter-stationery">
+      <button class="letter-close-btn" id="btn-close-letter" title="Close Letter">&times;</button>
+      
+      <div class="letter-wax-seal">💌</div>
+      
+      <h2 class="letter-salutation">
+        My Dearest Ghali, My Biwi, My Khurat Biwi, Meri Gundi, Mera Bacho Ki Maa &amp; Meri Sabkuch ❤️
+      </h2>
+
+      <div class="letter-body">
+        <p>
+          Happy Birthday to the girl who completely re-wrote my universe. From the moment my eyes found yours, every ordinary day turned into pure magic. Even when you get mad at me and turn into my cute little <strong>khurat biwi</strong> with that adorable pout, my heart still smiles knowing that you are mine and I am yours forever.
+        </p>
+
+        <p>
+          You are not just my love—you are my best friend, my sweetest trouble maker (meri gundi!), my safe place, and the future mother of our beautiful babies (mera bacho ki maa!). No amount of words, pages, or websites could ever measure how deeply and endlessly I love you.
+        </p>
+
+        <!-- THE 3 SACRED PROMISES -->
+        <div class="letter-promise-box">
+          <div style="font-size:0.8rem; font-weight:800; color:#BE123C; letter-spacing:2px; text-transform:uppercase;">
+            MY SACRED BIRTHDAY PROMISES TO YOU 💍
+          </div>
+          <div class="promise-item">
+            <span>✨</span>
+            <span>"I Promise I'll never change, you are my everything."</span>
+          </div>
+          <div class="promise-item">
+            <span>✨</span>
+            <span>"I Promise I'll never give up because you are my everything."</span>
+          </div>
+          <div class="promise-item">
+            <span>✨</span>
+            <span>"I Promise that I'll never leave because I can't live without you."</span>
+          </div>
+        </div>
+
+        <p>
+          Tu meri jaan hai, mera sukoon hai, aur mera sabkuch hai. No matter how many birthdays come and go, I will always hold your hand, wipe your tears, laugh at our silly inside jokes, and love you more and more with every breath I take.
+        </p>
+
+        <!-- FAMILY BIRTHDAY WISHES SECTION -->
+        <div class="letter-family-box" id="family-wishes-section">
+          <div class="family-box-badge">💖 FAMILY BIRTHDAY WISHES 🎥</div>
+          <h3 class="family-box-title">Special Messages From Our Loved Ones</h3>
+          <p class="family-box-note">
+            The people who love you most sending their heartfelt prayers and sweetest birthday wishes!
+          </p>
+          <div class="family-videos-grid" id="family-videos-grid">
+            <!-- Family videos will automatically be rendered here -->
+          </div>
+        </div>
+
+        <p>
+          Now stop blushing, my khurat biwi! You still have another gift waiting for you! 😉❤️
+        </p>
+      </div>
+
+      <div class="letter-signature">
+        Forever &amp; Always Yours,<br>
+        Tera Shohar &amp; Tera Sabkuch ❤️
+      </div>
+
+      <div style="margin-top:36px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+        <button class="btn-proceed-gifts" id="btn-letter-proceed-gift2" style="padding:16px 36px; font-size:1.05rem;">
+          Open Gift 2 🎁
+        </button>
+        <button class="btn-proceed-gifts" id="btn-letter-proceed-finale" style="padding:16px 36px; font-size:1.05rem; background:linear-gradient(135deg, #881337 0%, #4C0519 100%);">
+          Ek Aakhri Cheez, Ghali... 🌹
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/hub.js?v=8"></script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>The Story of Us — For My Ghali</title>
+  <meta name="description" content="A quiet collection of memories told through our camera roll. For my Ghali, my biwi, my khurat biwi, meri sabkuch.">
+  <meta name="theme-color" content="#141414">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141414'/><text x='50' y='72' font-family='Arial Black, sans-serif' font-size='70' font-weight='900' fill='%23E50914' text-anchor='middle'>G</text></svg>">
+  <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body>
+
+  <!-- SVG Icons Definitions -->
+  <svg style="display: none;">
+    <defs>
+      <!-- Play Icon -->
+      <g id="icon-play">
+        <path d="M8 5v14l11-7z" fill="currentColor"/>
+      </g>
+      <!-- Pause Icon -->
+      <g id="icon-pause">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/>
+      </g>
+      <!-- Info Icon -->
+      <g id="icon-info">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+      </g>
+      <!-- Search Icon -->
+      <g id="icon-search">
+        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+      </g>
+      <!-- Home Icon -->
+      <g id="icon-home">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
+      </g>
+      <!-- Series / TV Icon -->
+      <g id="icon-tv">
+        <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z" fill="currentColor"/>
+      </g>
+      <!-- Upcoming / Calendar Icon -->
+      <g id="icon-calendar">
+        <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z" fill="currentColor"/>
+      </g>
+      <!-- My List / Bookmark Icon -->
+      <g id="icon-list">
+        <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" fill="currentColor"/>
+      </g>
+      <!-- Back Arrow -->
+      <g id="icon-back">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+      </g>
+      <!-- Volume Up -->
+      <g id="icon-volume">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="currentColor"/>
+      </g>
+      <!-- Volume Mute -->
+      <g id="icon-mute">
+        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" fill="currentColor"/>
+      </g>
+      <!-- Episodes Icon -->
+      <g id="icon-episodes">
+        <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z" fill="currentColor"/>
+      </g>
+      <!-- Audio & Subtitles Icon -->
+      <g id="icon-subtitles">
+        <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM6 10h2v2H6zm0 4h8v2H6zm10 0h2v2h-2zm-6-4h8v2h-8z" fill="currentColor"/>
+      </g>
+      <!-- Next Episode Icon -->
+      <g id="icon-next">
+        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/>
+      </g>
+      <!-- Fullscreen Icon -->
+      <g id="icon-fullscreen">
+        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
+      </g>
+      <!-- Replay 10s -->
+      <g id="icon-replay10">
+        <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8zm-1.1 11h-.8v-3.3h-.7v-.6h1.5v3.9zm3.8-2c0 .6-.1 1.1-.3 1.4-.2.4-.6.6-1.1.6s-.9-.2-1.1-.6c-.2-.4-.3-.9-.3-1.4v-1.1c0-.6.1-1.1.3-1.4.2-.4.6-.6 1.1-.6s.9.2 1.1.6c.2.4.3.9.3 1.4v1.1zm-.8-1.2c0-.4 0-.7-.1-.9-.1-.2-.2-.3-.5-.3s-.4.1-.5.3c-.1.2-.1.5-.1.9v1.2c0 .4 0 .7.1.9.1.2.2.3.5.3s.4-.1.5-.3c.1-.2.1-.5.1-.9v-1.2z" fill="currentColor"/>
+      </g>
+      <!-- Forward 10s -->
+      <g id="icon-forward10">
+        <path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8zm-1.1 11h-.8v-3.3h-.7v-.6h1.5v3.9zm3.8-2c0 .6-.1 1.1-.3 1.4-.2.4-.6.6-1.1.6s-.9-.2-1.1-.6c-.2-.4-.3-.9-.3-1.4v-1.1c0-.6.1-1.1.3-1.4.2-.4.6-.6 1.1-.6s.9.2 1.1.6c.2.4.3.9.3 1.4v1.1zm-.8-1.2c0-.4 0-.7-.1-.9-.1-.2-.2-.3-.5-.3s-.4.1-.5.3c-.1.2-.1.5-.1.9v1.2c0 .4 0 .7.1.9.1.2.2.3.5.3s.4-.1.5-.3c.1-.2.1-.5.1-.9v-1.2z" fill="currentColor"/>
+      </g>
+    </defs>
+  </svg>
+
+  <div id="app">
+
+    <!-- Background Audio Element (3 looping love songs) -->
+    <audio id="bg-music" preload="auto"></audio>
+
+    <!-- Floating Background Music Player Widget -->
+    <div class="music-pill-widget" id="music-pill-widget" title="Soundtrack For My Ghali">
+      <div class="music-eq-anim" id="music-eq-anim">
+        <div class="music-eq-bar"></div>
+        <div class="music-eq-bar"></div>
+        <div class="music-eq-bar"></div>
+        <div class="music-eq-bar"></div>
+      </div>
+      <div class="music-pill-info">
+        <span class="music-pill-title" id="music-title">Can't Help Falling in Love</span>
+        <span class="music-pill-artist" id="music-artist">Elvis Presley</span>
+      </div>
+      <button class="music-btn-icon" id="music-btn-playpause" title="Play/Pause Background Music">
+        <svg id="music-playpause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/></svg>
+      </button>
+      <button class="music-btn-icon" id="music-btn-next" title="Next Song">
+        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <!-- ====================================================================
+         SCREEN 1: "WHO'S WATCHING?" PROFILE PICKER
+         ==================================================================== -->
+    <section id="screen-profiles" class="screen active">
+      <div class="profiles-header">
+        <div class="ghali-brand-logo" title="Ghali">GHALI</div>
+      </div>
+
+      <h1 class="profiles-title">Who's watching?</h1>
+
+      <div class="profiles-grid" id="profiles-grid">
+        <!-- Rendered dynamically from CONFIG.profiles -->
+      </div>
+
+      <button class="manage-profiles-btn" id="btn-manage-profiles">Manage Profiles</button>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 2: NETFLIX BROWSE & HOME PAGE
+         ==================================================================== -->
+    <section id="screen-browse" class="screen">
+      <!-- Thin Icon Sidebar -->
+      <aside class="browse-sidebar">
+        <div class="sidebar-logo">
+          <div class="ghali-sidebar-icon">G</div>
+        </div>
+        <nav class="sidebar-nav">
+          <button class="sidebar-item" title="Search"><svg><use href="#icon-search"/></svg></button>
+          <button class="sidebar-item active" title="Home"><svg><use href="#icon-home"/></svg></button>
+          <button class="sidebar-item" title="Series"><svg><use href="#icon-tv"/></svg></button>
+          <button class="sidebar-item" title="Memories"><svg><use href="#icon-calendar"/></svg></button>
+          <button class="sidebar-item" title="Favorites"><svg><use href="#icon-list"/></svg></button>
+        </nav>
+        <div class="sidebar-bottom">
+          <a href="index.html?stage=finale" class="return-hub-btn" title="Final Chapter: One Last Thing..." style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, #e11d48, #be123c); color:#fff; text-decoration:none; margin-bottom:8px; font-size:16px; box-shadow:0 4px 10px rgba(0,0,0,0.6);" aria-label="One Last Thing...">🌹</a>
+          <a href="index.html" class="return-hub-btn" title="Back to Birthday Hub" style="display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:#e50914; color:#fff; text-decoration:none; margin-bottom:8px; font-size:16px; box-shadow:0 4px 10px rgba(0,0,0,0.6);" aria-label="Return to Birthday Hub">🎁</a>
+          <img src="" id="sidebar-user-avatar" class="sidebar-avatar" alt="Current Profile" title="Switch Profile">
+        </div>
+      </aside>
+
+      <!-- Main Browse Area -->
+      <main class="browse-main">
+        <!-- Mobile Top Nav -->
+        <header class="mobile-top-nav">
+          <div class="ghali-brand-logo mobile-logo" title="Ghali">GHALI</div>
+          <img src="" id="mobile-user-avatar" class="sidebar-avatar" alt="Profile">
+        </header>
+
+        <!-- Hero Section -->
+        <section class="browse-hero">
+          <div class="hero-background-backdrop">
+            <img src="All videos and Pictures/17.jpeg" id="hero-bg-img" class="hero-main-bg" alt="The Story of Us — My Ghali &amp; Me">
+            <div class="hero-vignette"></div>
+          </div>
+
+          <div class="hero-inner-container">
+            <div class="hero-content">
+              <div class="series-badge-row">
+                <span class="n-series-tag"><span class="red-n">G</span> FOR MY GHALI</span>
+              </div>
+
+              <h1 class="hero-title" id="hero-show-title">THE STORY OF US</h1>
+
+              <div class="hero-meta-row">
+                <span class="meta-match" id="hero-meta-match">100% Match</span>
+                <span class="meta-year" id="hero-meta-year">Forever &amp; Always</span>
+                <span class="meta-rating">TV-LOVE</span>
+                <span class="meta-seasons" id="hero-meta-seasons">3 Seasons • 23 Video Episodes &amp; 20 Polaroids</span>
+                <span class="meta-badge-hd">Ultra HD 4K</span>
+              </div>
+
+              <p class="hero-description" id="hero-show-desc">
+                A quiet collection of memories told through our camera roll—where fleeting moments, soft glances, and unspoken feelings capture our story. Dedicated to my Ghali, my biwi, my khurat biwi, meri gundi, mera bacho ki maa, and meri sabkuch: two souls deeply in love, creating a lifetime of memories together.
+              </p>
+
+              <div class="hero-actions">
+                <button class="btn-netflix btn-play-hero" id="btn-hero-play">
+                  <svg><use href="#icon-play"/></svg>
+                  <span>Play</span>
+                </button>
+                <button class="btn-netflix btn-info-hero" id="btn-hero-info">
+                  <svg><use href="#icon-info"/></svg>
+                  <span>More Info</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dynamic Carousel Rows (All Seasons + Camera Roll) -->
+        <div class="browse-content-rows" id="browse-content-rows">
+          <!-- Dynamically populated from CONFIG.seasons and CONFIG.photoMemories -->
+        </div>
+
+        <!-- Realistic Browse Footer -->
+        <footer class="browse-footer">
+          <div class="footer-social-row">
+            <span style="font-weight:700; color:#fff; font-size: 1rem;">❤️ Made with Endless Love For My Ghali, My Biwi, My Khurat Biwi, Meri Gundi, Mera Bacho Ki Maa &amp; Meri Sabkuch</span>
+          </div>
+          <div class="footer-links-grid">
+            <a href="#" class="footer-link">Audio Description</a>
+            <a href="#" class="footer-link">Help Center</a>
+            <a href="#" class="footer-link">Gift Cards</a>
+            <a href="#" class="footer-link">Media Center</a>
+            <a href="#" class="footer-link">Investor Relations</a>
+            <a href="#" class="footer-link">Jobs</a>
+            <a href="#" class="footer-link">Terms of Use</a>
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Legal Notices</a>
+            <a href="#" class="footer-link">Cookie Preferences</a>
+            <a href="#" class="footer-link">Corporate Information</a>
+            <a href="#" class="footer-link">Contact Us</a>
+          </div>
+          <button class="service-code-btn">Service Code: 143-GHALI-ALWAYS</button>
+          <div class="footer-copyright">
+            © 2024 The Story of Us • Starring My Ghali &amp; Me. All memories reserved.
+          </div>
+        </footer>
+      </main>
+    </section>
+
+
+    <!-- ====================================================================
+         SCREEN 3: CINEMATIC EPISODE PLAYER
+         ==================================================================== -->
+    <section id="screen-player" class="screen">
+      <!-- Media Viewport (Video or Ken-Burns Image) -->
+      <div class="player-viewport" id="player-viewport">
+        <video id="player-video" playsinline preload="auto"></video>
+        <div id="player-image-wrapper">
+          <img id="player-image-blur" class="player-image-backdrop" alt="">
+          <img id="player-image" alt="Episode Still">
+        </div>
+
+        <!-- Big Center Play/Pause indicator -->
+        <div class="center-action-indicator" id="center-indicator">
+          <svg id="center-indicator-icon"><use href="#icon-play"/></svg>
+        </div>
+      </div>
+
+      <!-- Top Overlay Header -->
+      <div class="player-overlay-top">
+        <div class="player-header-left">
+          <button class="btn-player-back" id="btn-player-back" title="Back to Browse">
+            <svg><use href="#icon-back"/></svg>
+          </button>
+          <div class="player-title-info">
+            <span class="player-episode-title" id="player-episode-title">S1: E1: The Day My Eyes Found You</span>
+            <span class="player-show-name" id="player-show-name">FOR MY GHALI — THE STORY OF US</span>
+          </div>
+        </div>
+        <div class="player-header-right">
+          <div class="ghali-player-badge">GHALI</div>
+        </div>
+      </div>
+
+      <!-- Bottom Overlay Controls -->
+      <div class="player-overlay-bottom">
+        <!-- Scrub Bar -->
+        <div class="scrub-container" id="player-scrub-container">
+          <div class="scrub-track">
+            <div class="scrub-buffer" id="player-scrub-buffer"></div>
+            <div class="scrub-progress" id="player-scrub-progress">
+              <div class="scrub-handle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="player-controls-row">
+          <div class="controls-left">
+            <button class="btn-player-ctrl" id="btn-player-playpause" title="Play/Pause (Space)">
+              <svg id="icon-playpause-use"><use href="#icon-pause"/></svg>
+            </button>
+            <button class="btn-player-ctrl" id="btn-player-rewind" title="Rewind 10s">
+              <svg><use href="#icon-replay10"/></svg>
+            </button>
+            <button class="btn-player-ctrl" id="btn-player-forward" title="Forward 10s">
+              <svg><use href="#icon-forward10"/></svg>
+            </button>
+            <button class="btn-player-ctrl" id="btn-player-mute" title="Mute/Unmute">
+              <svg id="icon-volume-use"><use href="#icon-volume"/></svg>
+            </button>
+            <span class="player-time-display" id="player-time-display">0:00 / 0:45</span>
+          </div>
+
+          <div class="controls-right">
+            <button class="btn-player-text-ctrl" id="btn-toggle-episodes">
+              <svg><use href="#icon-episodes"/></svg>
+              <span>Episodes</span>
+            </button>
+            <button class="btn-player-text-ctrl" id="btn-toggle-subtitles">
+              <svg><use href="#icon-subtitles"/></svg>
+              <span>Audio &amp; Subtitles</span>
+            </button>
+            <button class="btn-player-text-ctrl" id="btn-player-next-ep">
+              <svg><use href="#icon-next"/></svg>
+              <span>Next Episode</span>
+            </button>
+            <button class="btn-player-ctrl" id="btn-player-fullscreen" title="Fullscreen (F)">
+              <svg><use href="#icon-fullscreen"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episodes Drawer in Player -->
+      <div class="episodes-drawer" id="player-episodes-drawer">
+        <div class="drawer-header">
+          <div class="drawer-header-left">
+            <select class="drawer-season-select" id="drawer-season-select">
+              <option value="1">Season 1: How I Fell For My Ghali</option>
+              <option value="2">Season 2: Adventures With My Khurat Biwi</option>
+              <option value="3">Season 3: To Infinity &amp; Beyond With Meri Sabkuch</option>
+              <option value="photos">Our Camera Roll (20 Polaroids)</option>
+            </select>
+          </div>
+          <button class="btn-drawer-close" id="btn-close-episodes-drawer">&times;</button>
+        </div>
+        <div class="drawer-list" id="drawer-episodes-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Audio & Subtitles Dialog -->
+      <div class="audio-subtitles-dialog" id="player-audio-dialog">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div>
+            <div class="dialog-col-title">Audio</div>
+            <div class="dialog-option selected">Original Audio [Stereo]</div>
+            <div class="dialog-option">Director's Love Commentary ❤️</div>
+          </div>
+          <div>
+            <div class="dialog-col-title">Subtitles</div>
+            <div class="dialog-option selected">Love Notes For My Ghali ❤️</div>
+            <div class="dialog-option">English [CC]</div>
+            <div class="dialog-option">Off</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Episode Auto-Prompt Card -->
+      <div class="next-episode-card" id="next-ep-card">
+        <img src="" id="next-card-thumb" class="next-thumb" alt="Next Episode">
+        <div class="next-info">
+          <span class="next-badge">Next Episode</span>
+          <span class="next-title" id="next-card-title">Episode 2</span>
+          <span class="next-timer" id="next-card-timer">Playing in 5s...</span>
+        </div>
+        <button class="btn-play-next-now" id="btn-play-next-now">Play Now</button>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         MODAL: MORE INFO (SHOW OVERVIEW)
+         ==================================================================== -->
+    <div class="info-modal-backdrop" id="more-info-modal">
+      <div class="info-modal-box">
+        <button class="modal-close-btn" id="btn-close-info-modal">&times;</button>
+        
+        <div class="modal-hero">
+          <img src="" id="modal-hero-img" class="modal-hero-img" alt="Show Hero">
+          <div class="modal-hero-vignette"></div>
+          <div class="modal-hero-title-wrap">
+            <span class="n-series-tag"><span class="red-n">G</span> FOR MY GHALI</span>
+            <h2 class="modal-hero-title" id="modal-show-title">THE STORY OF US</h2>
+            <div style="display:flex; gap: 12px; align-items:center;">
+              <button class="btn-netflix btn-play-hero" id="btn-modal-play">
+                <svg><use href="#icon-play"/></svg>
+                <span>Play</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-meta-split">
+            <div>
+              <div class="hero-meta-row" style="margin-bottom: 12px;">
+                <span class="meta-match">100% Match</span>
+                <span class="meta-year">Forever &amp; Always</span>
+                <span class="meta-rating">TV-LOVE</span>
+                <span class="meta-seasons">3 Seasons • 44 Episodes &amp; Memories</span>
+                <span class="meta-badge-hd">Ultra HD 4K</span>
+              </div>
+              <p class="modal-desc" id="modal-show-desc">
+                A quiet collection of memories told through our camera roll. Dedicated to my Ghali, my biwi, my khurat biwi, meri gundi, mera bacho ki maa, and meri sabkuch: two souls deeply in love, creating a lifetime of memories together.
+              </p>
+            </div>
+            <div class="modal-details-sidebar">
+              <span><strong>Starring:</strong> My Ghali &amp; Me</span>
+              <span><strong>Nicknames:</strong> My Biwi, Khurat Biwi, Meri Gundi, Mera Bacho Ki Maa, Meri Sabkuch</span>
+              <span><strong>Genres:</strong> True Love, Soulmates, Romantic, Eternal</span>
+              <span><strong>This Show Is:</strong> Irreplaceable, Deeply Emotional, Forever</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="modal-episodes-heading-row">
+              <h3 class="modal-episodes-heading">Episodes &amp; Memories</h3>
+              <select class="modal-season-select" id="modal-season-select">
+                <option value="1">Season 1: How I Fell For My Ghali</option>
+                <option value="2">Season 2: Adventures With My Khurat Biwi</option>
+                <option value="3">Season 3: To Infinity &amp; Beyond With Meri Sabkuch</option>
+                <option value="photos">Our Camera Roll (20 Polaroids)</option>
+              </select>
+            </div>
+            <div class="modal-episodes-list" id="modal-episodes-list">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
+</body>
+</html>
