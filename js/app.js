@@ -119,10 +119,10 @@
   // ========================================================================
   // BACKGROUND MUSIC PLAYLIST & AUDIO DUCKING / SLOWING
   // ========================================================================
+  let musicSourceLoaded = false;
+
   function initBackgroundMusic() {
     if (!CONFIG.songs || CONFIG.songs.length === 0) return;
-
-    loadSong(state.currentSongIndex, false);
 
     // Continuous loop across the 3 songs
     el.bgMusic.addEventListener('ended', () => {
@@ -133,16 +133,19 @@
     // Music widget buttons
     el.musicBtnPlaypause.addEventListener('click', (e) => {
       e.stopPropagation();
+      ensureMusicSourceLoaded();
       toggleMusicPlayPause();
     });
 
     el.musicBtnNext.addEventListener('click', (e) => {
       e.stopPropagation();
+      ensureMusicSourceLoaded();
       nextSong();
     });
 
     // Start audio on first user touch / click anywhere if not yet started
     const startAudioOnce = () => {
+      ensureMusicSourceLoaded();
       if (!state.isMusicPlaying) {
         startMusicPlayback();
       }
@@ -155,10 +158,17 @@
     window.addEventListener('touchstart', startAudioOnce, { once: true });
   }
 
+  function ensureMusicSourceLoaded() {
+    if (!musicSourceLoaded) {
+      loadSong(state.currentSongIndex, false);
+    }
+  }
+
   function loadSong(index, autoPlay = true) {
     const song = CONFIG.songs[index];
     if (!song) return;
 
+    musicSourceLoaded = true;
     el.bgMusic.src = song.src;
     el.bgMusic.volume = state.normalMusicVolume;
     el.bgMusic.playbackRate = 1.0;
@@ -172,6 +182,7 @@
   }
 
   function startMusicPlayback() {
+    ensureMusicSourceLoaded();
     el.bgMusic.play().then(() => {
       state.isMusicPlaying = true;
       updateMusicWidgetUI(true);
@@ -671,9 +682,52 @@
     }, 400);
   }
 
-  // --- VIDEO LISTENERS ---
+  // --- VIDEO LISTENERS & FINALE REDIRECT ---
+  function markNetflixWatched() {
+    sessionStorage.setItem('ghali_netflix_watched', 'true');
+    const heroFinaleBtn = document.getElementById('btn-hero-finale');
+    if (heroFinaleBtn) {
+      heroFinaleBtn.style.display = 'inline-flex';
+    }
+  }
+
+  let finaleRedirectTimer = null;
+  function triggerFinaleModalRedirect() {
+    markNetflixWatched();
+    const modal = document.getElementById('netflix-finale-modal');
+    if (!modal) {
+      window.location.href = "index.html?stage=finale";
+      return;
+    }
+
+    modal.style.display = 'flex';
+    let secondsLeft = 4;
+    const secSpan = document.getElementById('netflix-countdown-sec');
+    if (secSpan) secSpan.textContent = secondsLeft;
+
+    if (finaleRedirectTimer) clearInterval(finaleRedirectTimer);
+    finaleRedirectTimer = setInterval(() => {
+      secondsLeft--;
+      if (secSpan) secSpan.textContent = secondsLeft;
+      if (secondsLeft <= 0) {
+        clearInterval(finaleRedirectTimer);
+        window.location.href = "index.html?stage=finale";
+      }
+    }, 1000);
+
+    const cancelBtn = document.getElementById('btn-netflix-cancel-redirect');
+    if (cancelBtn) {
+      cancelBtn.onclick = () => {
+        if (finaleRedirectTimer) clearInterval(finaleRedirectTimer);
+        modal.style.display = 'none';
+        advanceNextChapter();
+      };
+    }
+  }
+
   el.playerVideo.addEventListener('play', () => {
     onVideoPlay();
+    markNetflixWatched();
   });
 
   el.playerVideo.addEventListener('pause', () => {
@@ -688,6 +742,11 @@
 
     el.scrubProgress.style.width = `${pct}%`;
     el.timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+
+    // Mark as watched once she has played 10 seconds or 30% of the video
+    if (current > 10 || pct > 30) {
+      markNetflixWatched();
+    }
 
     if (duration - current <= 5 && !el.nextEpCard.classList.contains('show')) {
       showNextEpisodeCard();
@@ -704,7 +763,8 @@
 
   el.playerVideo.addEventListener('ended', () => {
     onVideoPauseOrEnd();
-    advanceNextChapter();
+    markNetflixWatched();
+    triggerFinaleModalRedirect();
   });
 
   // --- SCRUBBER SEEKING ---

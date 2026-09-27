@@ -91,7 +91,7 @@
   <div id="app">
 
     <!-- Background Audio Element (3 looping love songs) -->
-    <audio id="bg-music" preload="auto"></audio>
+    <audio id="bg-music" preload="none"></audio>
 
     <!-- Floating Background Music Player Widget -->
     <div class="music-pill-widget" id="music-pill-widget" title="Soundtrack For My Ghali">
@@ -165,7 +165,7 @@
         <!-- Hero Section -->
         <section class="browse-hero">
           <div class="hero-background-backdrop">
-            <img src="All videos and Pictures/17.jpeg" id="hero-bg-img" class="hero-main-bg" alt="The Story of Us — My Ghali &amp; Me">
+            <img src="All videos and Pictures/17.jpeg" id="hero-bg-img" class="hero-main-bg" alt="The Story of Us — My Ghali &amp; Me" loading="eager" fetchpriority="high">
             <div class="hero-vignette"></div>
           </div>
 
@@ -198,6 +198,9 @@
                   <svg><use href="#icon-info"/></svg>
                   <span>More Info</span>
                 </button>
+                <a href="index.html?stage=finale" class="btn-netflix btn-finale-hero" id="btn-hero-finale" style="background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                  <span>🌹 Finale: One Last Thing</span>
+                </a>
               </div>
             </div>
           </div>
@@ -242,7 +245,7 @@
     <section id="screen-player" class="screen">
       <!-- Media Viewport (Video or Ken-Burns Image) -->
       <div class="player-viewport" id="player-viewport">
-        <video id="player-video" playsinline preload="auto"></video>
+        <video id="player-video" playsinline preload="none"></video>
         <div id="player-image-wrapper">
           <img id="player-image-blur" class="player-image-backdrop" alt="">
           <img id="player-image" alt="Episode Still">
@@ -426,6 +429,30 @@
               <!-- Injected via JS -->
             </div>
           </div>
+        </div>
+      </div>
+    <!-- ====================================================================
+         MODAL: FINALE REDIRECT (WHEN NETFLIX IS WATCHED)
+         ==================================================================== -->
+    <div class="netflix-finale-modal" id="netflix-finale-modal" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+      <div style="background:#181818; border:1px solid rgba(225,29,72,0.4); border-radius:16px; max-width:480px; width:100%; padding:36px 28px; text-align:center; box-shadow:0 24px 60px rgba(0,0,0,0.9), 0 0 40px rgba(225,29,72,0.25);">
+        <div style="font-size:3.2rem; margin-bottom:12px; filter:drop-shadow(0 4px 12px rgba(225,29,72,0.4));">🌹🎬</div>
+        <h2 style="font-family:'Bebas Neue', sans-serif; font-size:2.2rem; letter-spacing:1px; color:#fff; margin-bottom:8px;">
+          OUR STORY WAS JUST THE BEGINNING...
+        </h2>
+        <p style="color:#d1d5db; font-size:1rem; line-height:1.6; margin-bottom:20px;">
+          You watched our story, meri ghali. Now your final birthday chapter has officially been unlocked!
+        </p>
+        <div style="background:rgba(225,29,72,0.12); border:1px solid rgba(225,29,72,0.25); border-radius:10px; padding:12px; margin-bottom:24px; color:#fb7185; font-weight:600; font-size:0.95rem;" id="netflix-finale-countdown-box">
+          Redirecting to your finale in <span id="netflix-countdown-sec" style="font-size:1.2rem; font-weight:800; color:#fff;">4</span>s...
+        </div>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a href="index.html?stage=finale" id="btn-netflix-go-finale-now" style="background:linear-gradient(135deg, #e11d48, #be123c); color:#fff; text-decoration:none; padding:14px 28px; border-radius:8px; font-weight:700; font-size:1rem; display:inline-flex; align-items:center; gap:8px; box-shadow:0 6px 20px rgba(225,29,72,0.4);">
+            <span>Open Finale Now 🌹</span>
+          </a>
+          <button type="button" id="btn-netflix-cancel-redirect" style="background:rgba(255,255,255,0.12); color:#e5e7eb; border:none; padding:14px 22px; border-radius:8px; font-weight:600; font-size:0.95rem; cursor:pointer;">
+            <span>Stay on Netflix</span>
+          </button>
         </div>
       </div>
     </div>

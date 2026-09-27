@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/hub.css?v=8">
+  <link rel="preload" as="image" href="All videos and Pictures/11.jpeg">
 </head>
 <body>
 
@@ -17,7 +18,7 @@
   <div class="photo-bubbles-container" id="photo-bubbles-container"></div>
 
   <!-- Background Audio Element (Continuous Love Songs) -->
-  <audio id="hub-bg-music" preload="auto"></audio>
+  <audio id="hub-bg-music" preload="none"></audio>
 
   <!-- Floating Music Pill Widget -->
   <div class="hub-music-widget" id="hub-music-widget" title="Birthday Soundtrack">
@@ -69,7 +70,7 @@
 
       <div class="gate-right-photo">
         <div class="gate-photo-frame">
-          <img src="All videos and Pictures/11.jpeg" class="gate-photo-img" alt="My Ghali &amp; Me">
+          <img src="All videos and Pictures/11.jpeg" class="gate-photo-img" alt="My Ghali &amp; Me" loading="eager" fetchpriority="high">
           <div class="gate-photo-caption">My Ghali, Meri Jaan ❤️</div>
         </div>
       </div>
@@ -139,7 +140,7 @@
       </div>
 
       <div class="video-viewport-wrap">
-        <video id="surprise-video-elem" controls playsinline></video>
+        <video id="surprise-video-elem" preload="none" controls playsinline></video>
       </div>
 
       <div class="video-footer-actions">
@@ -189,16 +190,16 @@
       </div>
     </div>
 
-    <!-- TEASER FOR THE FINAL CHAPTER (Appears after exploring) -->
+    <!-- TEASER FOR THE FINAL CHAPTER (LOCKED until Netflix has been watched!) -->
     <div class="finale-teaser-wrap" id="finale-teaser-wrap">
-      <div class="finale-teaser-card" id="btn-open-finale">
-        <div class="teaser-sparkle">🌹</div>
+      <div class="finale-teaser-card locked" id="btn-open-finale">
+        <div class="teaser-sparkle" id="finale-teaser-icon">🔒</div>
         <div class="teaser-info">
-          <span class="teaser-badge">THE FINALE ✨</span>
-          <h3 class="teaser-title">Ek Aakhri Cheez, Ghali... 🌹</h3>
-          <p class="teaser-text">Tujhe kya laga bas do gifts aur khatam? Abhi to sab se khaas chapter baki hai...</p>
+          <span class="teaser-badge" id="finale-teaser-badge" style="background:#6B7280;">LOCKED 🔒</span>
+          <h3 class="teaser-title" id="finale-teaser-title">Ek Aakhri Cheez, Ghali... 🔒</h3>
+          <p class="teaser-text" id="finale-teaser-text">Yeh sab se khaas chapter tab khulega jab tum Gift 2 (The Story of Us) Netflix par dekh logi! Pehle wo dekho 😉🍿</p>
         </div>
-        <button class="btn-enter-finale-badge">Open Finale 🌹</button>
+        <button class="btn-enter-finale-badge" id="btn-enter-finale-badge" style="background:#4B5563;">Locked 🔒</button>
       </div>
     </div>
   </section>
@@ -383,7 +384,7 @@
 
           <div class="mystery-scold-note">
             <p>"Aur khabardaar agar poochne ki koshish ki ke doosra surprise kya hai."</p>
-            <p>"You've already unlocked enough spoilers for one night, khurat." 😂❤️</p>
+            <p>"You've already unlocked enough spoilers for one night, meri ghali." 😂❤️</p>
           </div>
 
           <div class="slide-footer-nav">
@@ -441,13 +442,31 @@
       <div class="hub-dialog-emoji">😂❤️</div>
       <h2 class="hub-dialog-title" style="color:#E11D48; font-size:1.85rem;">HAHAHAHAHAHAHA</h2>
       <p class="hub-dialog-msg" style="font-size:1.15rem; color:#1F2937; line-height:1.6; margin:16px 0 28px;">
-        Nice try, khurat! 😂<br><br>
+        Nice try, meri ghali! 😂<br><br>
         Tujhe waqai laga maine poori birthday website banayi hai taake tu 'NO' dabaye?<br><br>
         <strong style="color:#E11D48; font-size:1.25rem;">NO OPTION AVAILABLE 😭❤️</strong><br><br>
         Ab chup chap YES kar, batameez biwi! 😤❤️
       </p>
       <button class="hub-btn-yes" id="btn-date-modal-yes" style="padding:14px 36px; font-size:1.1rem;">
         YES MERI JAAN ❤️
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       MODAL: FINALE LOCKED WARNING
+       ==================================================================== -->
+  <div class="hub-modal-backdrop" id="modal-finale-locked">
+    <div class="hub-dialog-card" style="max-width:480px;">
+      <div class="hub-dialog-emoji">🔒🍿</div>
+      <h2 class="hub-dialog-title" style="color:#BE123C; font-size:1.85rem;">Arey Sabar Meri Jaan! 😂❤️</h2>
+      <p class="hub-dialog-msg" style="font-size:1.1rem; color:#374151; line-height:1.6; margin:16px 0 24px;">
+        Yeh aakhri aur sab se khaas surprise tab tak locked rahega jab tak tum Gift 2 (The Story of Us) Netflix par dekh nahi leti!<br><br>
+        Pehle wo dekh kar aao meri gundi, phir aana idhar 😉❤️
+      </p>
+      <button class="hub-btn-yes" id="btn-finale-locked-goto-netflix" style="padding:14px 34px; font-size:1.05rem;">
+        Pehle The Story of Us Dekhti Hoon 🍿
       </button>
     </div>
   </div>
@@ -565,9 +584,6 @@
       <div style="margin-top:36px; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
         <button class="btn-proceed-gifts" id="btn-letter-proceed-gift2" style="padding:16px 36px; font-size:1.05rem;">
           Open Gift 2 🎁
-        </button>
-        <button class="btn-proceed-gifts" id="btn-letter-proceed-finale" style="padding:16px 36px; font-size:1.05rem; background:linear-gradient(135deg, #881337 0%, #4C0519 100%);">
-          Ek Aakhri Cheez, Ghali... 🌹
         </button>
       </div>
     </div>

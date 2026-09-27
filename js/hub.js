@@ -54,6 +54,7 @@
     isMusicPlaying: false,
     activeGiftModal: null, // 'gift1' or 'gift2'
     hasOpenedGift1: sessionStorage.getItem('ghali_gift1_opened') === 'true',
+    hasWatchedNetflix: sessionStorage.getItem('ghali_netflix_watched') === 'true',
   };
 
   // --- DOM ELEMENTS ---
@@ -125,8 +126,18 @@
     btnLetterProceedFinale: document.getElementById('btn-letter-proceed-finale'),
     familyVideosGrid: document.getElementById('family-videos-grid'),
 
-    // Final Chapter Stage Elements
+    // Final Chapter & Locked Elements
+    cardFinaleTeaser: document.getElementById('card-finale-teaser'),
     btnOpenFinale: document.getElementById('btn-open-finale'),
+    finaleTeaserBadge: document.getElementById('finale-teaser-badge'),
+    finaleTeaserIcon: document.getElementById('finale-teaser-icon'),
+    finaleTeaserTitle: document.getElementById('finale-teaser-title'),
+    finaleTeaserText: document.getElementById('finale-teaser-text'),
+    btnEnterFinaleBadge: document.getElementById('btn-enter-finale-badge'),
+    modalFinaleLocked: document.getElementById('modal-finale-locked'),
+    btnFinaleLockedClose: document.getElementById('btn-finale-locked-close'),
+    btnFinaleLockedGotoNetflix: document.getElementById('btn-finale-locked-goto-netflix'),
+
     btnFinaleBack: document.getElementById('btn-finale-back'),
     btnNowGetReady: document.getElementById('btn-now-get-ready'),
     sectionDateInvite: document.getElementById('section-date-invite'),
@@ -146,6 +157,10 @@
     bubblesContainer: document.getElementById('photo-bubbles-container'),
   };
 
+  // Flag for starting bubbles only once leaving gate
+  let bubblesStarted = false;
+  let musicSourceLoaded = false;
+
   // ========================================================================
   // STAGE ROUTING
   // ========================================================================
@@ -161,22 +176,29 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // User requirement: Starting page (stage-gate) should NOT show bubbles!
+    if (stageId === 'stage-gifts') {
+      updateGift2LockUI();
+      updateFinaleLockUI();
+    }
+
+    // Performance optimization: Don't spawn/display bubbles on the entrance gate!
     if (el.bubblesContainer) {
       if (stageId === 'stage-gate') {
         el.bubblesContainer.style.display = 'none';
       } else {
         el.bubblesContainer.style.display = 'block';
+        if (!bubblesStarted) {
+          bubblesStarted = true;
+          startPhotoBubbles();
+        }
       }
     }
   }
 
   // ========================================================================
-  // BACKGROUND MUSIC
+  // BACKGROUND MUSIC (DEFERRED LOADING FOR FAST FIRST PAINT)
   // ========================================================================
   function initMusic() {
-    loadSong(state.currentSongIndex, false);
-
     el.bgMusic.addEventListener('ended', () => {
       state.currentSongIndex = (state.currentSongIndex + 1) % HUB_CONFIG.songs.length;
       loadSong(state.currentSongIndex, true);
@@ -185,9 +207,9 @@
     el.musicBtnPlaypause.addEventListener('click', toggleMusic);
     el.musicBtnNext.addEventListener('click', nextSong);
 
-    // Autoplay on first click anywhere
+    // Only load audio source on first user interaction or when passing gate
     const startAudioOnce = () => {
-      if (!state.isMusicPlaying) startMusic();
+      ensureMusicLoaded(true);
       window.removeEventListener('click', startAudioOnce);
       window.removeEventListener('keydown', startAudioOnce);
       window.removeEventListener('touchstart', startAudioOnce);
@@ -197,9 +219,19 @@
     window.addEventListener('touchstart', startAudioOnce, { once: true });
   }
 
+  function ensureMusicLoaded(autoPlay = false) {
+    if (!musicSourceLoaded) {
+      musicSourceLoaded = true;
+      loadSong(state.currentSongIndex, autoPlay);
+    } else if (autoPlay && !state.isMusicPlaying) {
+      startMusic();
+    }
+  }
+
   function loadSong(index, autoPlay = true) {
     const song = HUB_CONFIG.songs[index];
     if (!song) return;
+    musicSourceLoaded = true;
     el.bgMusic.src = song.src;
     el.musicTitle.textContent = song.title;
     el.musicArtist.textContent = song.artist;
@@ -211,6 +243,7 @@
   }
 
   function startMusic() {
+    ensureMusicLoaded(false);
     el.bgMusic.play().then(() => {
       state.isMusicPlaying = true;
       el.musicPlayIcon.style.display = 'none';
@@ -239,14 +272,16 @@
   }
 
   // ========================================================================
-  // FLOATING PHOTO BUBBLES GENERATOR
+  // FLOATING PHOTO BUBBLES GENERATOR (OPTIMIZED & DEFERRED)
   // ========================================================================
-  function initPhotoBubbles() {
+  function startPhotoBubbles() {
     if (!el.bubblesContainer) return;
 
     let photoIndex = 0;
 
     function spawnBubble() {
+      if (state.currentStage === 'stage-gate') return;
+
       const bubble = document.createElement('div');
       bubble.className = 'photo-bubble';
 
@@ -262,7 +297,7 @@
       bubble.style.left = `${leftPos}%`;
       bubble.style.animationDuration = `${duration}s`;
 
-      bubble.innerHTML = `<img src="${photoSrc}" alt="Memory" loading="lazy">`;
+      bubble.innerHTML = `<img src="${photoSrc}" alt="Memory" loading="lazy" decoding="async">`;
 
       bubble.addEventListener('click', () => {
         burstConfetti(leftPos / 100, 0.6);
@@ -276,18 +311,15 @@
       }, duration * 1000 + 500);
     }
 
-    // Spawn generous first wave (more bubbles!)
-    for (let i = 0; i < 16; i++) {
-      setTimeout(spawnBubble, i * 200);
+    // Spawn small initial wave of 4 bubbles to conserve bandwidth
+    for (let i = 0; i < 4; i++) {
+      setTimeout(spawnBubble, i * 400);
     }
 
-    // Continuously spawn bubbles frequently (every 850ms, with bonus twins)
+    // Continuously spawn bubbles at a gentle cadence
     setInterval(() => {
       spawnBubble();
-      if (Math.random() > 0.5) {
-        setTimeout(spawnBubble, 250);
-      }
-    }, 850);
+    }, 1400);
   }
 
   // ========================================================================
@@ -541,6 +573,53 @@
     }
   }
 
+  function updateFinaleLockUI() {
+    state.hasWatchedNetflix = sessionStorage.getItem('ghali_netflix_watched') === 'true';
+    if (!el.cardFinaleTeaser || !el.btnOpenFinale) return;
+
+    if (state.hasWatchedNetflix) {
+      el.cardFinaleTeaser.classList.remove('locked-card');
+      if (el.finaleTeaserBadge) {
+        el.finaleTeaserBadge.textContent = 'SURPRISE 🌹';
+        el.finaleTeaserBadge.style.background = 'linear-gradient(135deg, #FFE4E6, #FECDD3)';
+        el.finaleTeaserBadge.style.color = '#BE123C';
+      }
+      if (el.finaleTeaserIcon) {
+        el.finaleTeaserIcon.textContent = '💌';
+        el.finaleTeaserIcon.style.background = 'linear-gradient(135deg, #FFF1F2, #FFE4E6)';
+        el.finaleTeaserIcon.style.color = '#BE123C';
+      }
+      if (el.finaleTeaserTitle) {
+        el.finaleTeaserTitle.textContent = 'Ek Aakhri Cheez, Ghali... 🌹';
+      }
+      if (el.finaleTeaserText) {
+        el.finaleTeaserText.textContent = 'You thought this was just about two gifts? I have something personal to tell you.';
+      }
+      el.btnOpenFinale.innerHTML = `<span>Open Finale</span><span class="btn-badge" id="btn-enter-finale-badge">Uncut</span>`;
+      el.btnOpenFinale.style.background = 'linear-gradient(135deg, #E11D48, #BE123C)';
+    } else {
+      el.cardFinaleTeaser.classList.add('locked-card');
+      if (el.finaleTeaserBadge) {
+        el.finaleTeaserBadge.textContent = 'LOCKED 🔒';
+        el.finaleTeaserBadge.style.background = '#F3F4F6';
+        el.finaleTeaserBadge.style.color = '#6B7280';
+      }
+      if (el.finaleTeaserIcon) {
+        el.finaleTeaserIcon.textContent = '🔒';
+        el.finaleTeaserIcon.style.background = '#F3F4F6';
+        el.finaleTeaserIcon.style.color = '#9CA3AF';
+      }
+      if (el.finaleTeaserTitle) {
+        el.finaleTeaserTitle.textContent = 'Ek Aakhri Cheez, Ghali... 🔒';
+      }
+      if (el.finaleTeaserText) {
+        el.finaleTeaserText.textContent = 'Locked until you watch our story in Gift 2 (Netflix) 🎬';
+      }
+      el.btnOpenFinale.innerHTML = `<span>Locked 🔒</span><span class="btn-badge" style="background:rgba(0,0,0,0.12); color:#4B5563;">Watch Gift 2 First</span>`;
+      el.btnOpenFinale.style.background = 'linear-gradient(135deg, #9CA3AF, #6B7280)';
+    }
+  }
+
   function openGiftPasswordModal(giftType) {
     state.activeGiftModal = giftType;
     el.giftPasswordInput.value = '';
@@ -662,25 +741,45 @@
       });
     }
 
-    // Open Finale from Gifts Portal
-    const openFinaleBtn = document.getElementById('btn-open-finale');
-    if (openFinaleBtn) {
-      openFinaleBtn.addEventListener('click', () => {
+    // Open Finale from Gifts Portal (Locked until Netflix is watched)
+    if (el.btnOpenFinale) {
+      el.btnOpenFinale.addEventListener('click', (e) => {
+        e.preventDefault();
+        state.hasWatchedNetflix = sessionStorage.getItem('ghali_netflix_watched') === 'true';
+
+        if (!state.hasWatchedNetflix) {
+          if (el.modalFinaleLocked) {
+            el.modalFinaleLocked.classList.add('open');
+            const card = el.modalFinaleLocked.querySelector('.hub-dialog-card');
+            if (card) {
+              card.classList.add('shake-anim');
+              setTimeout(() => card.classList.remove('shake-anim'), 500);
+            }
+          }
+          return;
+        }
+
         goToSlide(1);
         showStage('stage-finale');
         burstConfetti(0.5, 0.4);
       });
     }
 
-    // Open Finale directly from Love Letter modal button
-    const letterProceedFinale = document.getElementById('btn-letter-proceed-finale');
-    if (letterProceedFinale) {
-      letterProceedFinale.addEventListener('click', () => {
-        el.modalLoveLetter.classList.remove('open');
-        document.body.style.overflow = '';
-        goToSlide(1);
-        showStage('stage-finale');
-        burstConfetti(0.5, 0.4);
+    // Finale Locked Modal Buttons
+    if (el.btnFinaleLockedClose) {
+      el.btnFinaleLockedClose.addEventListener('click', () => {
+        if (el.modalFinaleLocked) el.modalFinaleLocked.classList.remove('open');
+      });
+    }
+
+    if (el.btnFinaleLockedGotoNetflix) {
+      el.btnFinaleLockedGotoNetflix.addEventListener('click', () => {
+        if (el.modalFinaleLocked) el.modalFinaleLocked.classList.remove('open');
+        if (!state.hasOpenedGift1) {
+          openGiftPasswordModal('gift1');
+        } else {
+          openGiftPasswordModal('gift2');
+        }
       });
     }
 
@@ -799,7 +898,6 @@
   // ========================================================================
   function init() {
     initMusic();
-    initPhotoBubbles();
     initGate();
     initWelcome();
     initConfirmDialog();
@@ -809,6 +907,8 @@
     const urlParams = new URLSearchParams(window.location.search);
     const targetStage = urlParams.get('stage');
     if (targetStage === 'finale') {
+      state.hasWatchedNetflix = true;
+      sessionStorage.setItem('ghali_netflix_watched', 'true');
       showStage('stage-finale');
     } else if (targetStage === 'gifts') {
       showStage('stage-gifts');
