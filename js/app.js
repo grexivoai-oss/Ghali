@@ -682,46 +682,28 @@
     }, 400);
   }
 
-  // --- VIDEO LISTENERS & FINALE REDIRECT ---
+  // --- VIDEO LISTENERS & FINALE REDIRECT ON COMPLETION ---
   function markNetflixWatched() {
     sessionStorage.setItem('ghali_netflix_watched', 'true');
-    const heroFinaleBtn = document.getElementById('btn-hero-finale');
-    if (heroFinaleBtn) {
-      heroFinaleBtn.style.display = 'inline-flex';
-    }
   }
 
-  let finaleRedirectTimer = null;
-  function triggerFinaleModalRedirect() {
+  let isRedirecting = false;
+  function redirectToFinaleOnComplete() {
+    if (isRedirecting) return;
+    isRedirecting = true;
     markNetflixWatched();
-    const modal = document.getElementById('netflix-finale-modal');
-    if (!modal) {
-      window.location.href = "index.html?stage=finale";
-      return;
-    }
 
-    modal.style.display = 'flex';
-    let secondsLeft = 4;
-    const secSpan = document.getElementById('netflix-countdown-sec');
-    if (secSpan) secSpan.textContent = secondsLeft;
-
-    if (finaleRedirectTimer) clearInterval(finaleRedirectTimer);
-    finaleRedirectTimer = setInterval(() => {
-      secondsLeft--;
-      if (secSpan) secSpan.textContent = secondsLeft;
-      if (secondsLeft <= 0) {
-        clearInterval(finaleRedirectTimer);
+    const overlay = document.getElementById('netflix-completion-overlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+      });
+      setTimeout(() => {
         window.location.href = "index.html?stage=finale";
-      }
-    }, 1000);
-
-    const cancelBtn = document.getElementById('btn-netflix-cancel-redirect');
-    if (cancelBtn) {
-      cancelBtn.onclick = () => {
-        if (finaleRedirectTimer) clearInterval(finaleRedirectTimer);
-        modal.style.display = 'none';
-        advanceNextChapter();
-      };
+      }, 1400);
+    } else {
+      window.location.href = "index.html?stage=finale";
     }
   }
 
@@ -764,7 +746,7 @@
   el.playerVideo.addEventListener('ended', () => {
     onVideoPauseOrEnd();
     markNetflixWatched();
-    triggerFinaleModalRedirect();
+    redirectToFinaleOnComplete();
   });
 
   // --- SCRUBBER SEEKING ---
